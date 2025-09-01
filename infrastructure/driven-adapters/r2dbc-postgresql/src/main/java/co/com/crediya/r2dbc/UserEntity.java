@@ -1,8 +1,6 @@
 package co.com.crediya.r2dbc;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -11,11 +9,12 @@ import lombok.Data;
 public class UserEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String nationalIdNumber;
     private String firstName;
     private String lastName;
-    private String Username;
+    private String username;
     private String phone;
     private String email;
     private int age;
