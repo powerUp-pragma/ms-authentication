@@ -14,7 +14,7 @@ public class User {
     private String nationalIdNumber;
     private String firstName;
     private String lastName;
-    private String Username;
+    private String username;
     private String phone;
     private String email;
     private int age;
