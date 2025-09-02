@@ -27,7 +27,7 @@ public class Handler {
 
     public Mono<ServerResponse> listenGetUserById(ServerRequest serverRequest) {
         return extractUserId(serverRequest)
-                .flatMap(userUseCase::getUser)
+                .flatMap(userUseCase::getUserById)
                 .flatMap(this::mapToUserDto)
                 .flatMap(this::buildSuccessResponse)
                 .switchIfEmpty(ServerResponse.notFound().build())
@@ -64,7 +64,6 @@ public class Handler {
     }
 
     private Mono<ServerResponse> handleError(Throwable throwable) {
-        // ✅ Manejo específico de diferentes errores
         if (throwable instanceof IllegalArgumentException) {
             return ServerResponse.badRequest()
                     .bodyValue(new ErrorResponse("Invalid input", throwable.getMessage()));
@@ -72,7 +71,7 @@ public class Handler {
 
         if (throwable instanceof RuntimeException) {
             return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .bodyValue(new ErrorResponse("Processing error", "Failed to process user data"));
+                    .bodyValue(new ErrorResponse("Processing error", throwable.getMessage()));
         }
 
         return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)

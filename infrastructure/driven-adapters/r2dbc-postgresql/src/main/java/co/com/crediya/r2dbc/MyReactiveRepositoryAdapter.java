@@ -4,7 +4,9 @@ import co.com.crediya.model.user.User;
 import co.com.crediya.model.user.gateways.UserRepository;
 import co.com.crediya.r2dbc.helper.ReactiveAdapterOperations;
 import org.reactivecommons.utils.ObjectMapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -14,19 +16,23 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     String,
     MyReactiveRepository
 > implements UserRepository {
-    public MyReactiveRepositoryAdapter(MyReactiveRepository repository, ObjectMapper mapper) {
+    private final TransactionalOperator transactionalOperator;
+
+
+    public MyReactiveRepositoryAdapter(MyReactiveRepository repository, ObjectMapper mapper, TransactionalOperator transactionalOperator) {
         super(repository, mapper, d -> mapper.map(d, User.class));
+        this.transactionalOperator = transactionalOperator;
     }
 
     @Override
-    public Mono<User> getUser(String id) {
+    public Mono<User> getUser(@Param("id")String id) {
         return super.findById(id);
     }
 
 
     @Override
     public Mono<User> saveUser(User user) {
-        return super.save(user);
+        return transactionalOperator.transactional(super.save(user));
     }
 
     @Override
