@@ -11,7 +11,7 @@ public class UserUseCase {
     private final UserRepository userRepository;
 
 
-    public Mono<User> getUser(String id) {
+    public Mono<User> getUserById(String id) {
         return userRepository.getUser(id);
     }
 

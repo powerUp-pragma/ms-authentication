@@ -4,6 +4,7 @@ import co.com.crediya.model.user.User;
 import co.com.crediya.model.user.gateways.UserRepository;
 import co.com.crediya.r2dbc.helper.ReactiveAdapterOperations;
 import org.reactivecommons.utils.ObjectMapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Mono;
@@ -24,7 +25,7 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
-    public Mono<User> getUser(String id) {
+    public Mono<User> getUser(@Param("id")String id) {
         return super.findById(id);
     }
 

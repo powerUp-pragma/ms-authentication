@@ -5,12 +5,17 @@ spring:
     name: "ms-auth"
   devtools:
     add-properties: false
-  h2:
-    console:
-      enabled: true
-      path: "/h2"
-  profiles:
-    include: null
+  adapters:
+    r2dbc:
+      host: localhost
+      port: 5432
+      database: crediya_db
+      username: crediya_user
+      password: crediya_pass
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
 management:
   endpoints:
     web:
@@ -22,3 +27,4 @@ management:
         enabled: true
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
+
