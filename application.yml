@@ -1,11 +1,10 @@
-# Configuración principal de la aplicación
+
 spring:
   application:
     name: ms-authentication
   profiles:
     active: dev
 
-# Configuración personalizada para R2DBC
 adapters:
   r2dbc:
     host: localhost
@@ -13,10 +12,32 @@ adapters:
     database: crediya_db
     schema: auth_schema
     username: crediya_user
-    password: crediya_password_123
+    password: crediya_pass
 
-# Configuración de logging
 logging:
   level:
     co.com.crediya: DEBUG
     org.springframework.r2dbc: INFO
+
+  api-docs:
+    path: /api-docs
+    swagger-ui:
+      path: /swagger-ui.html
+      enabled: true
+      operations-sorter: method
+      tags-sorter: alpha
+      display-request-duration: true
+    show-actuator: true
+    default-produces-media-type: application/json
+    default-consumes-media-type: application/json
+
+    # También puedes agregar info personalizada
+  springdoc:
+    swagger-ui:
+      url: /api-docs
+      doc-expansion: none
+      filter: true
+    api-docs:
+      enabled: true
+    packages-to-scan: co.com.crediya
+    paths-to-match: /api/**

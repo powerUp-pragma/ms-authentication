@@ -10,14 +10,15 @@ public class UserUseCase {
 
     private final UserRepository userRepository;
 
-    public Mono<User> getUser (String id) {
+
+    public Mono<User> getUser(String id) {
         return userRepository.getUser(id);
     }
 
-    public Mono<User> saveUser (User user){
+    public Mono<User> saveUser(User user) {
         return userRepository.saveUser(user);
-    }
 
+    }
 
 
 }

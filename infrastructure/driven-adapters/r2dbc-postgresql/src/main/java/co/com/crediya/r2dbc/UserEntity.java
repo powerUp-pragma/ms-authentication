@@ -1,11 +1,13 @@
 package co.com.crediya.r2dbc;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name = "user")
 @Data
+@Builder
 public class UserEntity {
 
     @Id

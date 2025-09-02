@@ -64,7 +64,6 @@ public class Handler {
     }
 
     private Mono<ServerResponse> handleError(Throwable throwable) {
-        // ✅ Manejo específico de diferentes errores
         if (throwable instanceof IllegalArgumentException) {
             return ServerResponse.badRequest()
                     .bodyValue(new ErrorResponse("Invalid input", throwable.getMessage()));
