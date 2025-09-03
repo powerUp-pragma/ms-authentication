@@ -22,7 +22,6 @@ public class UserValidator {
         if (user.getSalary() == null || user.getSalary().compareTo(BigInteger.ZERO) < 0) {
             return Mono.error(new IllegalArgumentException("Salary must be a non-negative number"));
         }
-
         return Mono.just(user);
     }
 }

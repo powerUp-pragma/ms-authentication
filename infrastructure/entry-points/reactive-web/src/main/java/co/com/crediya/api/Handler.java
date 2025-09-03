@@ -25,6 +25,8 @@ public class Handler {
 
 //private  final UseCase2 useCase2;
 
+
+
     public Mono<ServerResponse> listenGetUserById(ServerRequest serverRequest) {
         return extractUserId(serverRequest)
                 .flatMap(userUseCase::getUserById)
@@ -32,6 +34,16 @@ public class Handler {
                 .flatMap(this::buildSuccessResponse)
                 .switchIfEmpty(ServerResponse.notFound().build())
                 .onErrorResume(this::handleError);
+    }
+
+    public Mono<ServerResponse> listenGetUserByEmail(ServerRequest serverRequest) {
+        return extractUserEmail(serverRequest)
+                .flatMap(userUseCase::getUserByEmail)
+                .flatMap(this::mapToUserDto)
+                .flatMap(this::buildSuccessResponse)
+                .switchIfEmpty(ServerResponse.notFound().build())
+                .onErrorResume(this::handleError);
+
     }
 
     public Mono<ServerResponse> listenPostSaveUser(ServerRequest serverRequest) {
@@ -50,6 +62,13 @@ public class Handler {
                 .map(String::trim)
                 .filter(id -> !id.isBlank())
                 .switchIfEmpty(Mono.error(new IllegalArgumentException("User ID cannot be empty")));
+    }
+
+    private Mono<String> extractUserEmail(ServerRequest serverRequest) {
+        return Mono.fromCallable(() -> serverRequest.pathVariable("email"))
+                .map(String::trim)
+                .filter(email -> !email.isBlank())
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("User email cannot be empty")));
     }
 
     private Mono<GetUserDto> mapToUserDto(User user) {
@@ -77,6 +96,8 @@ public class Handler {
         return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .bodyValue(new ErrorResponse("Server error", "Please try again later"));
     }
+
+
 
     public record ErrorResponse(
             String error,

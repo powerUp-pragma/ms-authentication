@@ -20,7 +20,9 @@ public class RouterRest {
 
     @Bean
     public RouterFunction<ServerResponse> routerFunction() {
+        log.info("router function init");
         return route(GET("/api/v1/user/{id}"), userHandler::listenGetUserById)
+                .andRoute(GET("/api/v1/user/{email}"), userHandler::listenGetUserByEmail)
                 .andRoute(POST("/api/v1/save"), userHandler::listenPostSaveUser);
     }
 }
