@@ -1,24 +1,20 @@
 package co.com.crediya.r2dbc;
-
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import lombok.Builder;
 import lombok.Data;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 import lombok.*;
 
-@Table("users")             // nombre de la tabla en la BD
-@Data                       // getters, setters, equals, hashCode, toString
-@NoArgsConstructor          // constructor vacío
-@AllArgsConstructor         // constructor con todos los campos
-@Builder                    // patrón Builder
+@Table("users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
+    @Column("user_id")
     private String id;
 
     private String nationalIdNumber;

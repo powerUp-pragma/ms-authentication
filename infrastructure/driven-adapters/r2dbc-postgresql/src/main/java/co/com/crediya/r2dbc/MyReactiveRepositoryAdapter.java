@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Repository
 public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
         User,
@@ -25,13 +27,14 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
-    public Mono<User> getUser(@Param("id")String id) {
+    public Mono<User> getUserById(@Param("id")String id) {
         return super.findById(id);
     }
 
 
     @Override
     public Mono<User> saveUser(User user) {
+        user.setId(UUID.randomUUID().toString());
         return transactionalOperator.transactional(super.save(user));
     }
 

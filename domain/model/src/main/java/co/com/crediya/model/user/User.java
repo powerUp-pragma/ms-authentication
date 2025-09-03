@@ -1,5 +1,8 @@
 package co.com.crediya.model.user;
+import co.com.crediya.model.role.Role;
 import lombok.*;
+
+import java.math.BigInteger;
 //import lombok.NoArgsConstructor;
 
 
@@ -17,10 +20,8 @@ public class User {
     private String username;
     private String phone;
     private String email;
+    private BigInteger salary;
+    private Role role;
     private int age;
-
-
-
-
 
 }
