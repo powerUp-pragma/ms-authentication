@@ -1,13 +1,14 @@
 package co.com.crediya.usecase.validations;
 
 import co.com.crediya.model.user.User;
-import org.springframework.stereotype.Component;
+
 import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
-@Component
+
 public class UserValidator {
+
 
     public Mono<User> registryUserValidator(User user) {
         if (user == null) {

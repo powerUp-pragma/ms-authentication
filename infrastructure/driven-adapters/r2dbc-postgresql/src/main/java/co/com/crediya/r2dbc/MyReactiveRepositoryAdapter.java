@@ -39,6 +39,16 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
+    public Mono<User> getUserByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public Mono<User> getUserByNationalId(String nationalId) {
+        return null;
+    }
+
+    @Override
     public Mono<User> updateUser(User user) {
         return null;
     }
