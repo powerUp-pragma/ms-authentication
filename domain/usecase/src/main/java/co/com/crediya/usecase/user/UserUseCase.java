@@ -2,9 +2,7 @@ package co.com.crediya.usecase.user;
 
 import co.com.crediya.model.user.User;
 import co.com.crediya.model.user.gateways.UserRepository;
-import co.com.crediya.usecase.validations.EmailValidator;
-import co.com.crediya.usecase.validations.NationalIdValidator;
-import co.com.crediya.usecase.validations.UserValidator;
+import co.com.crediya.usecase.validations.UserValidation;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -13,9 +11,10 @@ import reactor.core.publisher.Mono;
 public class UserUseCase implements IUserUseCase {
 
     private final UserRepository userRepository;
-    private final UserValidator userValidator;
-    private final EmailValidator emailValidator;
-    private final NationalIdValidator nationalIdValidator;
+
+
+    UserValidation userValidation = new UserValidation();
+
 
     @Override
     public Mono<User> getUserById(String id) {
@@ -29,19 +28,19 @@ public class UserUseCase implements IUserUseCase {
     @Override
     public Mono<User> saveUser(User user) {
         return Mono.just(user)
-                .flatMap(userValidator::registryUserValidator)
+                .flatMap(userValidation::registryUserValidator)
                 .flatMap(userRepository::saveUser);
     }
 
     @Override
     public Mono<User> getUserByEmail(String email) {
-        return emailValidator.emailValidate(email)
+        return userValidation.emailValidator(email)
                 .flatMap(user -> userRepository.getUserByEmail(email));
     }
 
     @Override
     public Mono<User> getUserByNationalId(String nationalId) {
-        return nationalIdValidator.nationalIdValidate(nationalId)
+        return userValidation.nationalIdValidator(nationalId)
                 .flatMap(user -> userRepository.getUserByNationalId(nationalId));
     }
 

@@ -3,7 +3,7 @@ import co.com.crediya.model.role.Role;
 import lombok.*;
 
 import java.math.BigInteger;
-//import lombok.NoArgsConstructor;
+import java.util.UUID;
 
 
 @Getter
@@ -13,7 +13,7 @@ import java.math.BigInteger;
 @Builder(toBuilder = true)
 public class User {
 
-    private String id;
+    private UUID userId;
     private String nationalIdNumber;
     private String firstName;
     private String lastName;
@@ -21,7 +21,6 @@ public class User {
     private String phone;
     private String email;
     private BigInteger salary;
-    private Role role;
     private int age;
 
 }

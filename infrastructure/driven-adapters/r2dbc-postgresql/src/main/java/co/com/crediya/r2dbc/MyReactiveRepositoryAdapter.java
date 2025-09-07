@@ -15,7 +15,7 @@ import java.util.UUID;
 public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
         User,
     UserEntity,
-    String,
+    UUID,
     MyReactiveRepository
 > implements UserRepository {
     private final TransactionalOperator transactionalOperator;
@@ -28,13 +28,12 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
 
     @Override
     public Mono<User> getUserById(@Param("id")String id) {
-        return super.findById(id);
+        return super.findById(UUID.fromString(id));
     }
 
 
     @Override
     public Mono<User> saveUser(User user) {
-        user.setId(UUID.randomUUID().toString());
         return transactionalOperator.transactional(super.save(user));
     }
 

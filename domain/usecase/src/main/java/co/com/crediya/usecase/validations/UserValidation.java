@@ -6,10 +6,10 @@ import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
+public class UserValidation implements IUserValidation {
 
-public class UserValidator {
 
-
+    @Override
     public Mono<User> registryUserValidator(User user) {
         if (user == null) {
             return Mono.error(new IllegalArgumentException("User must not be null"));
@@ -25,4 +25,24 @@ public class UserValidator {
         }
         return Mono.just(user);
     }
+
+    @Override
+    public Mono<String> emailValidator(String email) {
+        if (email == null || email.matches("[^@ ]+@[^@ ]+\\.[^@ ]+")) {
+            return Mono.error(new IllegalArgumentException("Email is invalid"));
+        }
+        return Mono.just(email);
+    }
+
+    @Override
+    public Mono<String> nationalIdValidator(String nationalId) {
+        if (nationalId == null || !nationalId.matches("^\\d{6,10}$")) {
+            return Mono.error(new IllegalArgumentException("nationalId is not valid for Colombia citizens"));
+        }
+        return Mono.just(nationalId);
+    }
 }
+
+
+
+

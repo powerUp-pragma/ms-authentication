@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.*;
 
+import java.math.BigInteger;
+import java.util.UUID;
+
 @Table("users")
 @Data
 @NoArgsConstructor
@@ -15,7 +18,7 @@ public class UserEntity {
 
     @Id
     @Column("user_id")
-    private String id;
+    private UUID userId;
 
     private String nationalIdNumber;
 
@@ -28,6 +31,8 @@ public class UserEntity {
     private String phone;
 
     private String email;
+
+    private BigInteger salary;
 
     private int age;
 }
